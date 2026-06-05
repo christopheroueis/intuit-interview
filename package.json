@@ -2,10 +2,9 @@
   "name": "intuit-interview",
   "private": true,
   "version": "1.0.0",
-  "description": "Intuit fraud & risk interview demo — Vercel deploys the React dashboard",
+  "description": "Intuit fraud & risk Bloomberg-terminal Dash dashboard",
   "scripts": {
-    "dev": "npm run dev --prefix intuit-risk-dashboard",
-    "build": "npm run build --prefix intuit-risk-dashboard",
-    "preview": "npm run preview --prefix intuit-risk-dashboard"
+    "dev": "python app.py",
+    "build": "echo 'Vercel builds the Dash app via requirements.txt + api/index.py'"
   }
 }

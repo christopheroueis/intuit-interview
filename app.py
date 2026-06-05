@@ -1,3 +1,4 @@
+import os
 import dash
 from dash import dcc, html, Input, Output, State, dash_table, clientside_callback, ClientsideFunction
 import dash_bootstrap_components as dbc
@@ -9,6 +10,9 @@ import numpy as np
 import json, base64
 from datetime import datetime
 from pathlib import Path
+
+# Skip the 42MB raw CSV on Vercel — use precomputed results.json + chart PNGs instead.
+_ON_VERCEL = os.environ.get("VERCEL") == "1"
 
 # ==============================================================================
 # DESIGN SYSTEM
@@ -56,6 +60,8 @@ BASE = Path(__file__).parent
 np.random.seed(42)
 
 try:
+    if _ON_VERCEL:
+        raise FileNotFoundError("Raw CSV skipped on Vercel — using precomputed assets")
     df_raw = pd.read_csv(BASE / 'Fraud & Risk Analyst Intern A4A Data Set - Christopher O.xlsx - Data.csv')
     df_raw['close_reason'] = df_raw['close_reason'].fillna('Active/Open')
     _total_accts = len(df_raw)

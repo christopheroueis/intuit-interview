@@ -1,9 +1,15 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "npm install --prefix intuit-risk-dashboard",
-  "buildCommand": "npm run build --prefix intuit-risk-dashboard",
-  "outputDirectory": "intuit-risk-dashboard/dist",
+  "installCommand": "pip install -r requirements.txt",
+  "buildCommand": "echo 'Dash terminal dashboard — no frontend build step'",
+  "framework": null,
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 60,
+      "memory": 3008
+    }
+  },
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/(.*)", "destination": "/api/index" }
   ]
 }

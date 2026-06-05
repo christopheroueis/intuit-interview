@@ -1,0 +1,19 @@
+# Large data & analysis artifacts (not needed for the web app)
+*.csv
+*.xlsx
+*.ipynb
+*.pdf
+charts/
+lib/
+
+# Python Dash app (runs locally; Vercel serves the React build)
+app.py
+*.py
+assets/
+__pycache__/
+.venv/
+venv/
+
+# Docs & prompts
+*.md
+!intuit-risk-dashboard/README.md

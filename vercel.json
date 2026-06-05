@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "npm install --prefix intuit-risk-dashboard",
+  "buildCommand": "npm run build --prefix intuit-risk-dashboard",
+  "outputDirectory": "intuit-risk-dashboard/dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

@@ -116,9 +116,7 @@ export default function App() {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-[#0077C5] rounded-lg shadow-sm flex items-center justify-center">
-              <div className="w-3.5 h-3.5 bg-white rounded-full"></div>
-            </div>
+            <img src="/intuitlogo.png" alt="Intuit" className="w-9 h-9 rounded-lg shadow-sm object-contain bg-white" />
             <div>
               <h1 className="text-xl font-extrabold text-[#1B3A6B] tracking-tight">QuickBooks Payments</h1>
               <div className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] mt-0.5">Risk & Fraud Analytics</div>
@@ -139,6 +137,17 @@ export default function App() {
               </button>
             ))}
           </nav>
+
+          <select
+            className="md:hidden text-sm font-semibold border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-700"
+            value={activeTab}
+            onChange={(e) => setActiveTab(e.target.value)}
+            aria-label="Dashboard section"
+          >
+            {navItems.map((tab) => (
+              <option key={tab.id} value={tab.id}>{tab.label}</option>
+            ))}
+          </select>
         </div>
       </header>
 

@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --color-intuit-blue: #0077C5;
+  --color-intuit-navy: #1B3A6B;
+  --color-intuit-coral: #E5461B;
+  --color-intuit-amber: #F4A01C;
+  --color-intuit-green: #2ECC71;
+  --color-intuit-light: #F4F4F4;
+}
+
+@layer base {
+  body {
+    background-color: #F9FAFB;
+    color: #111827;
+    -webkit-font-smoothing: antialiased;
+  }
+}

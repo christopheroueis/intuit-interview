@@ -1,0 +1,56 @@
+{
+  "generated_at": "2026-02-23T12:06:15.491013",
+  "data_summary": {
+    "total_transactions": 300000,
+    "date_range": "2021-01-01 to 2021-12-30",
+    "total_txn_volume": 403600120.5225,
+    "total_chargebacks": 585016.5075000001,
+    "total_intuit_loss": 112733.91749999998,
+    "n_disputed_txns": 734,
+    "n_intuit_loss_txns": 84,
+    "n_accounts": 189826,
+    "n_accounts_with_loss": 81
+  },
+  "forecast_2022": {
+    "ensemble_monthly": [
+      10035.33330429871,
+      11252.663356352818,
+      11236.912989885688,
+      11217.929175962077,
+      11200.882384357234,
+      11183.198568831282,
+      11167.466837749165,
+      11151.113319384775,
+      11135.43653167615,
+      11121.735082366182,
+      11107.435369155228,
+      11095.126949492067
+    ],
+    "ensemble_total": 132905.23386951137,
+    "ensemble_monthly_avg": 11075.436155792615,
+    "scenario_optimistic_total": 73586.19880758424,
+    "scenario_base_total": 132905.23386951137,
+    "scenario_pessimistic_total": 303873.04090538004,
+    "monte_carlo_p10": 81649.85454403248,
+    "monte_carlo_p50": 113918.18849955393,
+    "monte_carlo_p90": 161644.7319488365
+  },
+  "model_metrics": {
+    "logistic_auc_pr": 0.13107864571462197,
+    "xgboost_auc_pr": 0.284624506331866,
+    "lightgbm_auc_pr": 0.2498181884703042,
+    "best_model": "XGBoost",
+    "top_waterfall_feature": "Account Age",
+    "cm_tn": 34920,
+    "cm_fp": 20,
+    "cm_fn": 9,
+    "cm_tp": 7,
+    "avg_loss_per_event": 1342.0704464285711
+  },
+  "key_insights": [
+    "Total IntuitLoss in 2021: $112,734",
+    "Loss rate: 2.8 bps",
+    "MONEY channel has highest loss rate at 454 bps",
+    "Ensemble 2022 forecast: $132,905 total"
+  ]
+}

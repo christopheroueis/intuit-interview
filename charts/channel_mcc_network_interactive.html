@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #0D1117;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"bipartite": 0, "color": "#97c2fc", "font": {"color": "white"}, "id": "CH:CASH", "label": "CH:CASH", "node_type": "channel", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Construction", "label": "MCC:Construction", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Contractors", "label": "MCC:Contractors", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:MCC 41", "label": "MCC:MCC 41", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:MCC 44", "label": "MCC:MCC 44", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Travel", "label": "MCC:Travel", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:MCC 48", "label": "MCC:MCC 48", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:MCC 50", "label": "MCC:MCC 50", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:General Merch", "label": "MCC:General Merch", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Auto", "label": "MCC:Auto", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Apparel", "label": "MCC:Apparel", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Retail Misc", "label": "MCC:Retail Misc", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Business Services", "label": "MCC:Business Services", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Auto Services", "label": "MCC:Auto Services", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Misc Services", "label": "MCC:Misc Services", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Movies", "label": "MCC:Movies", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Medical", "label": "MCC:Medical", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Legal", "label": "MCC:Legal", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Prof Services Misc", "label": "MCC:Prof Services Misc", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:MCC 93", "label": "MCC:MCC 93", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 0, "color": "#97c2fc", "font": {"color": "white"}, "id": "CH:GoPayment", "label": "CH:GoPayment", "node_type": "channel", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:MCC 27", "label": "MCC:MCC 27", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:MCC 51", "label": "MCC:MCC 51", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Food/Grocery", "label": "MCC:Food/Grocery", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Furnishings", "label": "MCC:Furnishings", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Restaurants/Bars", "label": "MCC:Restaurants/Bars", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:MCC 63", "label": "MCC:MCC 63", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Hotels", "label": "MCC:Hotels", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Cleaning/Laundry", "label": "MCC:Cleaning/Laundry", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Nonprofits", "label": "MCC:Nonprofits", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Organizations", "label": "MCC:Organizations", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 0, "color": "#97c2fc", "font": {"color": "white"}, "id": "CH:MONEY", "label": "CH:MONEY", "node_type": "channel", "shape": "dot", "size": 10}, {"bipartite": 0, "color": "#97c2fc", "font": {"color": "white"}, "id": "CH:Online terminal", "label": "CH:Online terminal", "node_type": "channel", "shape": "dot", "size": 10}, {"bipartite": 0, "color": "#97c2fc", "font": {"color": "white"}, "id": "CH:Other", "label": "CH:Other", "node_type": "channel", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Recreation", "label": "MCC:Recreation", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 0, "color": "#97c2fc", "font": {"color": "white"}, "id": "CH:POS", "label": "CH:POS", "node_type": "channel", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Home Supply", "label": "MCC:Home Supply", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:MCC 74", "label": "MCC:MCC 74", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 0, "color": "#97c2fc", "font": {"color": "white"}, "id": "CH:QB Webstore", "label": "CH:QB Webstore", "node_type": "channel", "shape": "dot", "size": 10}, {"bipartite": 0, "color": "#97c2fc", "font": {"color": "white"}, "id": "CH:QBDT", "label": "CH:QBDT", "node_type": "channel", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Transport", "label": "MCC:Transport", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:MCC 65", "label": "MCC:MCC 65", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Education", "label": "MCC:Education", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Prof Services", "label": "MCC:Prof Services", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 0, "color": "#97c2fc", "font": {"color": "white"}, "id": "CH:QBO", "label": "CH:QBO", "node_type": "channel", "shape": "dot", "size": 10}, {"bipartite": 1, "color": "#97c2fc", "font": {"color": "white"}, "id": "MCC:Utilities", "label": "MCC:Utilities", "node_type": "mcc", "shape": "dot", "size": 10}, {"bipartite": 0, "color": "#97c2fc", "font": {"color": "white"}, "id": "CH:QBOFTU", "label": "CH:QBOFTU", "node_type": "channel", "shape": "dot", "size": 10}, {"bipartite": 0, "color": "#97c2fc", "font": {"color": "white"}, "id": "CH:QBOV3", "label": "CH:QBOV3", "node_type": "channel", "shape": "dot", "size": 10}, {"bipartite": 0, "color": "#97c2fc", "font": {"color": "white"}, "id": "CH:QBSE", "label": "CH:QBSE", "node_type": "channel", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "CH:CASH", "il_total": 0.0, "to": "MCC:Construction", "width": 1425.0}, {"from": "CH:CASH", "il_total": 5988.75, "to": "MCC:Contractors", "width": 9633.75}, {"from": "CH:CASH", "il_total": 0.0, "to": "MCC:MCC 41", "width": 191.4375}, {"from": "CH:CASH", "il_total": 0.0, "to": "MCC:MCC 44", "width": 4320.375}, {"from": "CH:CASH", "il_total": 0.0, "to": "MCC:Travel", "width": 486.75}, {"from": "CH:CASH", "il_total": 0.0, "to": "MCC:MCC 48", "width": 2460.0}, {"from": "CH:CASH", "il_total": 1485.9, "to": "MCC:MCC 50", "width": 2068.32}, {"from": "CH:CASH", "il_total": 0.0, "to": "MCC:General Merch", "width": 3000.0}, {"from": "CH:CASH", "il_total": 158.31, "to": "MCC:Auto", "width": 158.31}, {"from": "CH:CASH", "il_total": 0.0, "to": "MCC:Apparel", "width": 26.2125}, {"from": "CH:CASH", "il_total": 0.0, "to": "MCC:Retail Misc", "width": 6693.75}, {"from": "CH:CASH", "il_total": 168.75, "to": "MCC:Business Services", "width": 10277.97}, {"from": "CH:CASH", "il_total": 1371.5625, "to": "MCC:Auto Services", "width": 3109.5675}, {"from": "CH:CASH", "il_total": 0.0, "to": "MCC:Misc Services", "width": 1875.0}, {"from": "CH:CASH", "il_total": 225.0, "to": "MCC:Movies", "width": 507.975}, {"from": "CH:CASH", "il_total": 0.0, "to": "MCC:Medical", "width": 77.61}, {"from": "CH:CASH", "il_total": 0.0, "to": "MCC:Legal", "width": 543.75}, {"from": "CH:CASH", "il_total": 0.0, "to": "MCC:Prof Services Misc", "width": 5547.4575}, {"from": "CH:CASH", "il_total": 97.5, "to": "MCC:MCC 93", "width": 97.5}, {"from": "CH:GoPayment", "il_total": 5550.0, "to": "MCC:Contractors", "width": 5550.0}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:MCC 27", "width": 107.5725}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:MCC 41", "width": 12.75}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:MCC 44", "width": 337.5}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:MCC 50", "width": 1166.295}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:MCC 51", "width": 36.75}, {"from": "CH:GoPayment", "il_total": 202.9725, "to": "MCC:General Merch", "width": 202.9725}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:Food/Grocery", "width": 112.5}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:Auto", "width": 51.84}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:Furnishings", "width": 237.1125}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:Restaurants/Bars", "width": 81.3375}, {"from": "CH:GoPayment", "il_total": 356.205, "to": "MCC:Retail Misc", "width": 698.1225}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:MCC 63", "width": 39.0}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:Hotels", "width": 117.0}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:Cleaning/Laundry", "width": 2230.395}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:Business Services", "width": 718.5}, {"from": "CH:GoPayment", "il_total": 1612.5, "to": "MCC:Auto Services", "width": 3979.3125}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:Misc Services", "width": 36.1125}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:Movies", "width": 4537.4925}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:Medical", "width": 6335.1224999999995}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:Legal", "width": 2062.5}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:Nonprofits", "width": 27.6975}, {"from": "CH:GoPayment", "il_total": 0.0, "to": "MCC:Organizations", "width": 90.0}, {"from": "CH:MONEY", "il_total": 675.0, "to": "MCC:Construction", "width": 675.0}, {"from": "CH:MONEY", "il_total": 18.75, "to": "MCC:General Merch", "width": 18.75}, {"from": "CH:MONEY", "il_total": 112.5, "to": "MCC:Retail Misc", "width": 112.5}, {"from": "CH:MONEY", "il_total": 465.0, "to": "MCC:Auto Services", "width": 465.0}, {"from": "CH:MONEY", "il_total": 319.335, "to": "MCC:Misc Services", "width": 319.335}, {"from": "CH:MONEY", "il_total": 0.0, "to": "MCC:Movies", "width": 517.935}, {"from": "CH:Online terminal", "il_total": 75.0, "to": "MCC:Movies", "width": 75.0}, {"from": "CH:Other", "il_total": 300.0, "to": "MCC:Food/Grocery", "width": 300.0}, {"from": "CH:Other", "il_total": 0.0, "to": "MCC:Business Services", "width": 28.5}, {"from": "CH:Other", "il_total": 0.0, "to": "MCC:Recreation", "width": 112.5}, {"from": "CH:POS", "il_total": 0.0, "to": "MCC:MCC 27", "width": 60.0}, {"from": "CH:POS", "il_total": 0.0, "to": "MCC:MCC 50", "width": 405.0}, {"from": "CH:POS", "il_total": 0.0, "to": "MCC:Home Supply", "width": 1226.8725}, {"from": "CH:POS", "il_total": 0.0, "to": "MCC:General Merch", "width": 1105.9125}, {"from": "CH:POS", "il_total": 0.0, "to": "MCC:Food/Grocery", "width": 457.16999999999996}, {"from": "CH:POS", "il_total": 1160.25, "to": "MCC:Auto", "width": 1160.25}, {"from": "CH:POS", "il_total": 0.0, "to": "MCC:Apparel", "width": 117.6375}, {"from": "CH:POS", "il_total": 198.75, "to": "MCC:Furnishings", "width": 198.75}, {"from": "CH:POS", "il_total": 0.0, "to": "MCC:Restaurants/Bars", "width": 43.1625}, {"from": "CH:POS", "il_total": 0.0, "to": "MCC:Retail Misc", "width": 4823.1225}, {"from": "CH:POS", "il_total": 0.0, "to": "MCC:Hotels", "width": 75.0}, {"from": "CH:POS", "il_total": 0.0, "to": "MCC:MCC 74", "width": 4373.385}, {"from": "CH:POS", "il_total": 0.0, "to": "MCC:Recreation", "width": 95.985}, {"from": "CH:POS", "il_total": 0.0, "to": "MCC:Medical", "width": 1671.0}, {"from": "CH:POS", "il_total": 0.0, "to": "MCC:Nonprofits", "width": 12.0}, {"from": "CH:QB Webstore", "il_total": 0.0, "to": "MCC:Contractors", "width": 35.6775}, {"from": "CH:QB Webstore", "il_total": 0.0, "to": "MCC:MCC 50", "width": 173.475}, {"from": "CH:QB Webstore", "il_total": 0.0, "to": "MCC:Furnishings", "width": 749.9625}, {"from": "CH:QB Webstore", "il_total": 0.0, "to": "MCC:Restaurants/Bars", "width": 28.35}, {"from": "CH:QB Webstore", "il_total": 0.0, "to": "MCC:Retail Misc", "width": 112.9125}, {"from": "CH:QB Webstore", "il_total": 0.0, "to": "MCC:Business Services", "width": 201.12}, {"from": "CH:QB Webstore", "il_total": 0.0, "to": "MCC:Recreation", "width": 3298.125}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Construction", "width": 7248.2625}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Contractors", "width": 5192.565}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:MCC 27", "width": 191.7}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:MCC 41", "width": 397.7625}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Transport", "width": 453.6}, {"from": "CH:QBDT", "il_total": 1350.1875, "to": "MCC:Travel", "width": 1680.4275}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:MCC 50", "width": 22292.55}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Home Supply", "width": 468.375}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:General Merch", "width": 4620.795}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Food/Grocery", "width": 479.37}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Furnishings", "width": 6155.325}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Restaurants/Bars", "width": 165.225}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Retail Misc", "width": 2273.0775}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:MCC 65", "width": 1531.5}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Hotels", "width": 74.6775}, {"from": "CH:QBDT", "il_total": 120.0, "to": "MCC:Cleaning/Laundry", "width": 3792.165}, {"from": "CH:QBDT", "il_total": 50.9775, "to": "MCC:Business Services", "width": 14828.025}, {"from": "CH:QBDT", "il_total": 79.5375, "to": "MCC:Auto Services", "width": 3309.1800000000003}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Misc Services", "width": 13446.2925}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Movies", "width": 2662.6949999999997}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Recreation", "width": 2488.41}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Medical", "width": 3180.4875}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Legal", "width": 2134.2675}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Education", "width": 897.75}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Nonprofits", "width": 283.38}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Organizations", "width": 97.5}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Prof Services", "width": 81.75}, {"from": "CH:QBDT", "il_total": 0.0, "to": "MCC:Prof Services Misc", "width": 3988.185}, {"from": "CH:QBO", "il_total": 12519.42, "to": "MCC:Construction", "width": 18047.9925}, {"from": "CH:QBO", "il_total": 6270.0, "to": "MCC:Contractors", "width": 37788.3225}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:MCC 27", "width": 1053.45}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:Transport", "width": 4357.7474999999995}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:MCC 44", "width": 814.26}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:Travel", "width": 1511.3775}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:MCC 48", "width": 9204.3375}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:Utilities", "width": 96.4575}, {"from": "CH:QBO", "il_total": 18845.2575, "to": "MCC:MCC 50", "width": 37847.94}, {"from": "CH:QBO", "il_total": 1500.0, "to": "MCC:MCC 51", "width": 5632.5525}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:Home Supply", "width": 10941.0225}, {"from": "CH:QBO", "il_total": 172.4925, "to": "MCC:General Merch", "width": 943.4549999999999}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:Food/Grocery", "width": 1752.5625}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:Auto", "width": 13055.9775}, {"from": "CH:QBO", "il_total": 82.4775, "to": "MCC:Apparel", "width": 4755.6375}, {"from": "CH:QBO", "il_total": 303.1425, "to": "MCC:Furnishings", "width": 23381.8125}, {"from": "CH:QBO", "il_total": 882.525, "to": "MCC:Restaurants/Bars", "width": 1463.385}, {"from": "CH:QBO", "il_total": 441.96000000000004, "to": "MCC:Retail Misc", "width": 11118.157500000001}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:MCC 63", "width": 398.535}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:MCC 65", "width": 3529.0875}, {"from": "CH:QBO", "il_total": 776.25, "to": "MCC:Hotels", "width": 1519.6275}, {"from": "CH:QBO", "il_total": 833.0775, "to": "MCC:Cleaning/Laundry", "width": 15579.195}, {"from": "CH:QBO", "il_total": 12754.635, "to": "MCC:Business Services", "width": 52080.9}, {"from": "CH:QBO", "il_total": 9397.5, "to": "MCC:Auto Services", "width": 24775.335}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:Misc Services", "width": 1513.8225}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:Movies", "width": 4512.5025}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:Recreation", "width": 2389.125}, {"from": "CH:QBO", "il_total": 209.115, "to": "MCC:Medical", "width": 6030.6525}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:Legal", "width": 14463.9}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:Education", "width": 607.35}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:Nonprofits", "width": 224.25}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:Organizations", "width": 26.25}, {"from": "CH:QBO", "il_total": 0.0, "to": "MCC:Prof Services Misc", "width": 12468.645}, {"from": "CH:QBOFTU", "il_total": 243.75, "to": "MCC:General Merch", "width": 243.75}, {"from": "CH:QBOFTU", "il_total": 0.0, "to": "MCC:Apparel", "width": 36.7875}, {"from": "CH:QBOFTU", "il_total": 440.7375, "to": "MCC:Retail Misc", "width": 754.7625}, {"from": "CH:QBOFTU", "il_total": 1781.2125, "to": "MCC:Cleaning/Laundry", "width": 1781.2125}, {"from": "CH:QBOFTU", "il_total": 7957.215, "to": "MCC:Business Services", "width": 8035.95}, {"from": "CH:QBOV3", "il_total": 266.805, "to": "MCC:Contractors", "width": 266.805}, {"from": "CH:QBOV3", "il_total": 1659.75, "to": "MCC:MCC 27", "width": 1659.75}, {"from": "CH:QBOV3", "il_total": 1728.0, "to": "MCC:Transport", "width": 1728.0}, {"from": "CH:QBOV3", "il_total": 161.19, "to": "MCC:Travel", "width": 161.19}, {"from": "CH:QBOV3", "il_total": 0.0, "to": "MCC:MCC 48", "width": 187.5}, {"from": "CH:QBOV3", "il_total": 2572.5, "to": "MCC:MCC 50", "width": 2572.5}, {"from": "CH:QBOV3", "il_total": 0.0, "to": "MCC:Apparel", "width": 128.7525}, {"from": "CH:QBOV3", "il_total": 375.0, "to": "MCC:Furnishings", "width": 1023.75}, {"from": "CH:QBOV3", "il_total": 0.0, "to": "MCC:Restaurants/Bars", "width": 183.75}, {"from": "CH:QBOV3", "il_total": 1111.5, "to": "MCC:Retail Misc", "width": 5213.2875}, {"from": "CH:QBOV3", "il_total": 0.0, "to": "MCC:MCC 65", "width": 74.25}, {"from": "CH:QBOV3", "il_total": 0.0, "to": "MCC:Hotels", "width": 2556.21}, {"from": "CH:QBOV3", "il_total": 465.75, "to": "MCC:Cleaning/Laundry", "width": 3257.4375}, {"from": "CH:QBOV3", "il_total": 2207.25, "to": "MCC:Business Services", "width": 9122.625}, {"from": "CH:QBOV3", "il_total": 0.0, "to": "MCC:Auto Services", "width": 379.62}, {"from": "CH:QBOV3", "il_total": 3000.0, "to": "MCC:Movies", "width": 3540.0}, {"from": "CH:QBOV3", "il_total": 270.0, "to": "MCC:Recreation", "width": 525.0}, {"from": "CH:QBOV3", "il_total": 0.0, "to": "MCC:Medical", "width": 112.5}, {"from": "CH:QBOV3", "il_total": 0.0, "to": "MCC:Education", "width": 63.75}, {"from": "CH:QBOV3", "il_total": 0.0, "to": "MCC:Nonprofits", "width": 131.25}, {"from": "CH:QBOV3", "il_total": 0.0, "to": "MCC:Prof Services", "width": 149.9925}, {"from": "CH:QBSE", "il_total": 0.0, "to": "MCC:Construction", "width": 113.31}, {"from": "CH:QBSE", "il_total": 0.0, "to": "MCC:Auto", "width": 1775.2125}, {"from": "CH:QBSE", "il_total": 75.0, "to": "MCC:Cleaning/Laundry", "width": 243.75}, {"from": "CH:QBSE", "il_total": 0.0, "to": "MCC:Business Services", "width": 1956.0}, {"from": "CH:QBSE", "il_total": 0.0, "to": "MCC:Medical", "width": 3000.0}, {"from": "CH:QBSE", "il_total": 0.0, "to": "MCC:Education", "width": 131.25}, {"from": "CH:QBSE", "il_total": 1287.6675, "to": "MCC:Prof Services Misc", "width": 1287.6675}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
